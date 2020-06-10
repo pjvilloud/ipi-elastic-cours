@@ -1,0 +1,1986 @@
+<!doctype html>
+
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>IPI - Cours sur la suite Elastic</title>
+    
+    <meta name="description" content="" />
+    <meta name="author" content="Pierre-Julien VILLOUD" />
+
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-4-navbar.css" rel="stylesheet" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/idea.css" rel="stylesheet" />
+    <link href="css/timeline.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+    
+</head>
+
+<body class="impress-not-supported">
+
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="my-navbar">
+  <a class="navbar-brand" href="index.html">
+    <img src="img/ipi.jpg" width="30" height="30" alt=""> Cours Elastic
+  </a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="nav nav-pills mr-auto">
+      
+    </ul>
+    <span class="navbar-text">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <form class="form-inline my-2 my-lg-0" onsubmit="search()">
+              <div class="input-group">
+                <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="searchNb"></span>
+                  <button class="btn btn-primary" type="submit"><i class="fa fa-icon fa-search"></i></button>
+                </div>
+              </div>
+              
+              
+            </form>
+            &nbsp;
+            <a class="btn btn-primary" href="https://github.com/pjvilloud/ipi-elastic-ex" target="_blank"><i class="fa fa-icon fa-gamepad"></i></a>
+            &nbsp;
+            <a class="btn btn-primary" href="mailto:pjvilloud@protonmail.com"><i class="fa fa-icon fa-envelope"></i></a>
+            &nbsp;
+            <a class="btn btn-primary" href="https://github.com/pjvilloud" target="_blank"><i class="fa fa-icon fa-github"></i></a>
+            &nbsp;
+            <a class="btn btn-primary" href="https://linkedin.com/pjvilloud" target="_blank"><i class="fa fa-icon fa-linkedin"></i></a>&nbsp;
+            <a class="btn btn-primary" href="#" id="numSlide">1</a>
+        </div>
+    </span>
+  </div>
+</nav>
+<div class="progress">
+  <div id="progress" class="progress-bar" style="width: 0%;" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<div class="container-fluid" id="impress">
+
+    <div id="accueil" class="step slide" data-rel-x="0" data-y=0>
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container text-center">
+            <h1 class="display-3">Bienvenue !</h1>
+            <p class="lead">
+                <h2>Pierre-Julien VILLOUD</h2>
+                <div class="big-top-margin">
+                    <img src="img/pjvilloud.jpg" class="img-bienvenue rounded mx-auto d-block" alt="Pierre-Julien VILLOUD">
+                </div>
+                <div class="big-top-margin">
+                    <h3><i class="fa fa-icon fa-envelope-square"></i>&nbsp;<a href="mailto:pjvilloud@protonmail.com">pjvilloud@protonmail.com</a></h3>
+                    <h3><i class="fa fa-icon fa-github-square"></i>&nbsp;<a href="https://github.com/pjvilloud" target="_blank">https://github.com/pjvilloud</a></h3>
+                    <h3><i class="fa fa-icon fa-linkedin-square"></i>&nbsp;<a href="https://linkedin.com/pjvilloud" target="_blank">https://linkedin.com/pjvilloud</a></h3>
+                    <h3><i class="fa fa-icon fa-globe"></i>&nbsp;<a href="http://pjvilloud.github.io" target="_blank">http://pjvilloud.github.io</a></h3>
+                </div>
+            </p>
+          </div>
+        </div>
+    </div>
+    
+    <div id="intro" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Introduction</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Considérons quelques cas d'utilisation que l'on rencontre fréquemment dans les projets informatiques
+            </div>
+          </div>
+          <div class="container small-font big-top-margin">
+            <div class="row">
+              <div class="col-sm-12">  
+                <ul class="list-group">
+                  <li class="list-group-item">Mise en place d'un moteur de recherche plus ou moins sophistiqué</li>
+                  <li class="list-group-item">Surveillance technique et fonctionnelle d'applications en temps réel</li>
+                  <li class="list-group-item">Détecter efficacement et solutionner rapidement des anomalies</li>
+                </ul>
+              </div>      
+            </div>      
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Ces problématiques sont complexes et développer des outils en interne permettant de les adresser serait très coûteux.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="intro-elastic" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">La suite Elastic</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Pour répondre à chacun de ces cas d'utilisation, nous parlerons de la suite Elastic, comprenant (entre autres...) <strong>Elasticsearch</strong>, <strong>Logstash</strong>, <strong>Kibana</strong> et <strong>Beats</strong>.
+            </div>
+          </div>
+          <div class="container-fluid small-font">
+            <div class="row">
+              <div class="col-sm-12">
+                <img src="img/elastic.png" alt="" height="500">
+              </div>
+            </div>      
+          </div>
+        </div>
+      </div>
+    </div>    
+
+    <div id="intro-history" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Historique</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Quelques repères autour des produits et solutions présentés dans ce cours.
+            </div>
+          </div>
+          <div class="container-fluid small-font">
+            <div class="row">
+              <div class="col">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <h4>2000</h4>
+                    <p class="text-justify">Shay Banon crée un moteur de recherche pour l'aider à s'y retrouver dans sa longue liste de recettes. <em>Compass</em>, puis <em>Elasticsearch</em> est développé (à partir d'Apache Lucene). La solution est rapidement adoptée par une communauté grandissante.</p>
+                  </li>
+                  <li class="list-group-item">
+                    <h4>2012</h4>
+                    <p class="text-justify">Fondation d'Elasticsearch Inc. (qui deviendra ensuite simplement Elastic) et association d'<em>Elasticsearch</em> avec l'agrégateur de log <em>Logstash</em> et l'outil de visualisation <em>Kibana</em> pour donner la stack <em>ELK</em>.</p>
+                  </li>
+                  <li class="list-group-item">
+                    <h4>2015</h4>
+                    <p class="text-justify">Harmonisation des développements et des numéros de version. Intégration de Beats. Déploiement du SaaS Elastic Cloud sur AWS</p>
+                  </li>
+                  <li class="list-group-item">
+                    <h4>2017-2018</h4>
+                    <p class="text-justify">Création d'Elastic Cloud Entreprise, la solution SaaS interne d'Elastic. Introduction en bourse de la société Elastic.</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Le moteur de recherche</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;A l'heure du Big Data, la recherche est un enjeu très important et les recherches <em>simples</em> ne sont plus suffisantes.
+            </div>
+          </div>
+          <div class="container small-font little-top-margin">
+            <div class="row">
+              <div class="col-sm-12">  
+                <div id="carouselExampleControls" class="carousel slide" data-interval="false" data-ride="carousel">
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <h3>Il faut pouvoir rechercher <strong>rapidement</strong> dans un ensemble de données conséquent et varié. </h3>
+                      <img src="img/rechercherapide.png">
+                    </div>
+                    <div class="carousel-item">
+                      <h3>Il faut pouvoir rechercher <strong>approximativement</strong> et proposer des corrections automatiques.</h3>
+                      <img src="img/recherchecorrection.png">
+                    </div>
+                    <div class="carousel-item">
+                      <h3>Il faut pouvoir <strong>trier</strong> selon divers critères des résultats avec une notion de <strong>pertinence</strong>. </h3>
+                      <img src="img/recherchepertinence.png">
+                    </div>
+                    <div class="carousel-item">
+                      <h3>Il faut pouvoir <strong>filtrer</strong> ou <strong>regrouper</strong> les résultats. </h3>
+                      <img src="img/recherchefacettes.png">
+                    </div>
+                    <div class="carousel-item">
+                      <h3>Il faut pouvoir <strong>proposer</strong> des <strong>suggestions</strong> pour améliorer la recherche. </h3>
+                      <img src="img/rechercheautocomplete.png">
+                    </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+              </div>      
+            </div>      
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-elastic" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Présentation d'Elasticsearch</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;<em>Elasticsearch</em> est un moteur de recherche et d'analyse de texte Open Source basé sur le moteur de recherche <em>Apache Lucene</em>. Il est la partie centrale de la suite <em>Elastic</em>. Il est également parmi les moteurs de base de données NoSql les plus populaires.
+            </div>
+          </div>
+          <div class="container small-font text-left big-top-margin">
+            <img src="img/Elasticsearch.png" width="1000">
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font big-top-margin" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;<em>Elasticsearch</em> fournit un ensemble de services web REST permettant d'intéragir avec lui et fonctionne en <em>cluster</em>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-concepts" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Concepts</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;<em>Elasticsearch</em> est un moteur de recherche riche en fonctionnalités mais relativement complexe. L'objectif ici est de comprendre les concepts clés permettant de l'utiliser dans le cadre de la suite <em>Elastic</em>.
+            </div>
+          </div>
+          <div class="container small-font text-center big-top-margin">
+            <img src="img/elasticconcepts.png">
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voyons en détail chacun de ces concepts. 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-concepts-root" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Document</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Un <strong>document</strong> représente les données que l'on souhaite stocker, et sur lesquelles nous effectuerons nos recherches. C'est l'équivalent d'une <em>ligne</em> d'un table de SGBDR.
+            </div>
+          </div>
+          <div class="container small-font text-left">
+            <pre>
+              <code class="json">{
+  "titre" : "Elasticsearch: The Definitive Guide",
+  "auteurs": ["Clinton Gormley", "Zachary Tong"],
+  "formats": [
+    {
+      "type": "Kindle",
+      "prix": 24.69
+    },
+    {
+      "type": "Broché",
+      "prix": 32.84
+    }   
+  ]          
+}</code></pre>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Un <strong>document</strong> est stocké sous forme d'un objet JSON. Les données à l'intérieur sont composées de champs <em>clé-valeur</em>. Ces valeurs peuvent être des types simples (chaîne de caractère, entier, décimal, booléen) ou être lui-même un objet JSON, ou encore un tableau.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-concepts-root-index" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Index</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>index</strong> sont l'équivalent des bases de données (pour les SGBDR). Ce sont des espaces permettant de stocker des <strong>documents</strong>.
+            </div>
+          </div>
+          <div class="container small-font text-left">
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est possible d'avoir plusieurs <strong>index</strong> dans un cluster mais chaque <strong>document</strong> est unique au sein d'un <strong>index</strong>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-concepts-root-type" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Type</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>types</strong> de <strong>documents</strong> permettent de regrouper les <strong>documents</strong> similaires et permet de filtrer les <strong>documents</strong> en fonction de leur <strong>type</strong>.
+            </div>
+          </div>
+          <div class="container small-font text-left">
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-warning small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Petit à petit, les <strong>types</strong> sont supprimés d'<em>Elasticsearch</em>. La version 7 a déprécié les requêtes filtrant par <strong>type</strong> et cette fonctionnalité sera tout simplement supprimée dans la version 8.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-concepts-root-mapping" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Mapping</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Un <strong>mapping</strong> est défini au niveau d'un <strong>index</strong> (un seul <strong>mapping</strong> par <strong>index</strong>) et permet de configurer la structure des <strong>documents</strong> et le type des données stockées dans ces derniers. Cela correspond au schéma d'une table d'un SGBDR.
+            </div>
+          </div>
+          <div class="container smaller-font text-left">
+            <pre>
+              <code class="json">{
+    "books": {
+        "mappings": {
+            "properties": {
+                "auteurs": {
+                    "type": "text",
+                    ...
+                },
+                "formats": {
+                    "properties": {
+                        "prix": {
+                            "type": "float"
+                        },
+                        "type": {
+                            "type": "text",
+                            ...
+                        }
+                    }
+                },
+                "titre": {
+                    "type": "text",
+                    ...
+                }
+            }
+        }
+    }
+}</code></pre>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Un <strong>mapping</strong> est déduit automatiquement lors de l'indexation du premier <strong>document</strong> dans l'<strong>index</strong> (à partir des données du document) mais peut-être défini explicitement.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-concepts-root-shard" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Shard</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il n'y a pas de limites concernant le nombre de documents que vous pouvez stocker dans un index. Afin d'éviter des plantages relatifs à des tailles d'index trop importantes, il est possible de diviser un index en plusieurs <strong>shards</strong> afin des les dispatcher sur les différents noeuds du cluster.
+            </div>
+          </div>
+          <div class="container-fluid small-font text-left little-top-margin">
+            <div class="border rounded border-5 border-info pt-3 pb-3">
+              <div class="row">
+                <div class="col text-center"><h3>Node 1</h3></div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <ul class="list-group rounded border border-3 border-warning">
+                    <li class="list-group-item text-center">
+                      <h3>Shard 1</h3>
+                    </li>
+                    <li class="list-group-item">
+                      <pre><code class="json">{
+  "titre": "Elasticsearch: The Definitive Guide",
+  ...
+}</code></pre>
+                    </li>
+                    <li class="list-group-item">
+                      <pre><code class="json">{
+  "titre": "Spring in Action",
+  ...
+}</code></pre>
+                    </li>
+                    <li class="list-group-item">
+                      ...
+                    </li>
+                  </ul>
+                </div>    
+                <div class="col">
+                  <ul class="list-group rounded border border-3 border-danger">
+                    <li class="list-group-item text-center">
+                      <h3>Shard 2</h3>
+                    </li>
+                    <li class="list-group-item">
+  <pre><code class="json">{
+  "titre": "Programming in Java",
+  ...
+}</code></pre>                  </li>
+                    <li class="list-group-item">
+  <pre><code class="json">{
+  "titre": "Continuous Integration",
+  ...
+}</code></pre>                  </li>
+                    <li class="list-group-item">...</li>
+                  </ul>
+                </div> 
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font little-top-margin" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est possible de configurer manuellement le nombre de shards par index (par défaut à 1).
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-concepts-root-replica" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Replica</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Une <strong>replica</strong> est une <em>copie</em> d'un <strong>shard</strong>.
+            </div>
+          </div>
+          <div class="container-fluid small-font text-left big-top-margin">
+            <div class="row">
+              <div class="border col rounded border-5 border-primary pt-3 pb-3">
+                <div class="text-center"><h3>Node 1</h3></div>
+                <ul class="list-group mb-2 rounded border border-3 border-warning">
+                  <li class="list-group-item text-center">
+                    <h3>Shard 1</h3>
+                  </li>
+                </ul>
+                <ul class="list-group mb-2 rounded border border-3 border-danger">
+                  <li class="list-group-item text-center">
+                    <h3>Shard 2</h3>
+                  </li>
+                </ul>
+                <ul class="list-group mb-2 rounded border border-3 border-info">
+                  <li class="list-group-item bg-gray text-center">
+                    <h3>Replica 3</h3>
+                  </li>
+                </ul>
+                <ul class="list-group mb-2 rounded border border-3 border-success">
+                  <li class="list-group-item bg-gray text-center">
+                    <h3>Replica 4</h3>
+                  </li>
+                </ul>
+              </div>
+              <div class="border col rounded border-5 border-secondary pt-3 pb-3">
+                <div class="text-center"><h3>Node 2</h3></div>
+                <ul class="list-group mb-2 rounded border border-3 border-info">
+                  <li class="list-group-item text-center">
+                    <h3>Shard 3</h3>
+                  </li>
+                </ul>
+                <ul class="list-group mb-2 rounded border border-3 border-success">
+                  <li class="list-group-item text-center">
+                    <h3>Shard 4</h3>
+                  </li>
+                </ul>
+                <ul class="list-group mb-2 rounded border border-3 border-warning">
+                  <li class="list-group-item bg-gray text-center">
+                    <h3>Replica 1</h3>
+                  </li>
+                </ul>
+                <ul class="list-group mb-2 rounded border border-3 border-danger">
+                  <li class="list-group-item bg-gray text-center">
+                    <h3>Replica 2</h3>
+                  </li>
+                </ul>
+              </div> 
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font big-top-margin" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Afin d'éviter les pertes de données, les <strong>replicas</strong> doivent être stockées sur des noeuds différents de leur <strong>shard</strong> d'origine. Le nombre de <strong>replicas</strong> par <strong>shard</strong> est configurable.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-concepts-root-recap" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Récapitulatif</h1>
+          <div class="container-fluid small-font text-left big-top-margin">
+            <div class="row">
+              <div class="col border col rounded border-5 border-dark pt-3 pb-3">
+                <div class="text-center"><h3>Cluster</h3></div>
+                <div class="row">
+                  <div class="border col rounded border-5 border-primary m-3">
+                    <div class="text-center"><h3>Node 1</h3></div>
+                    <ul class="list-group mb-2 rounded border border-3 border-warning">
+                      <li class="list-group-item text-center">
+                        <h3>Index 1 : Shard 1</h3>
+                      </li>
+                      <li class="list-group-item text-center">
+                        <span class="badge badge-primary">{ "title": "Elastic...", ... }</span>
+                        <span class="badge badge-primary">{ "title": "Spring...", ... }</span>
+                        <span class="badge badge-primary">...</span>
+                      </li>
+                    </ul>
+                    <ul class="list-group mb-2 rounded border border-3 border-info">
+                      <li class="list-group-item bg-gray text-center">
+                        <h3>Index 1 : Replica 2</h3>
+                      </li>
+                      <li class="list-group-item text-center">
+                        <span class="badge badge-secondary">{ "title": "Java...", ... }</span>
+                        <span class="badge badge-secondary">{ "title": "Continuous...", ... }</span>
+                        <span class="badge badge-secondary">...</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="border col rounded border-5 border-secondary m-3">
+                    <div class="text-center"><h3>Node 2</h3></div>
+                    <ul class="list-group mb-2 rounded border border-3 border-info">
+                      <li class="list-group-item text-center">
+                        <h3>Index 1 : Shard 2</h3>
+                      </li>
+                      <li class="list-group-item text-center">
+                        <span class="badge badge-primary">{ "title": "Java...", ... }</span>
+                        <span class="badge badge-primary">{ "title": "Continuous...", ... }</span>
+                        <span class="badge badge-primary">...</span>
+                      </li>
+                    </ul>
+                    <ul class="list-group mb-2 rounded border border-3 border-warning">
+                      <li class="list-group-item bg-gray text-center">
+                        <h3>Index 1 : Replica 1</h3>
+                      </li>
+                      <li class="list-group-item text-center">
+                        <span class="badge badge-secondary">{ "title": "Elastic...", ... }</span>
+                        <span class="badge badge-secondary">{ "title": "Spring...", ... }</span>
+                        <span class="badge badge-secondary">...</span>
+                      </li>
+                    </ul>
+                  </div> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-communication" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Communication</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            </div>
+          </div>
+          <div class="container small-font text-left">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-indexer" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Indexer</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            </div>
+          </div>
+          <div class="container small-font text-left">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-rechercher" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Rechercher</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            </div>
+          </div>
+          <div class="container small-font text-left">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="data" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Collecter les données</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;La recherche peut être faite sur des données très diverses (BDD, fichiers textes, sites web...). Il est donc nécessaire de collecter ces données et de transformer les informations pertinentes en documents compréhensibles par le moteur de recherche.
+            </div>
+          </div>
+          <div class="container-fluid small-font">
+            <div class="row" style="height: 500px">
+              <div class="col-sm-6 big-top-margin">
+                <nav class="little-top-margin">
+                  <div class="nav nav-pills flex-column" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-identification-tab" data-toggle="tab" href="#nav-identification" role="tab" aria-controls="nav-identification" aria-selected="true">
+                      Identification des données à indexer
+                    </a>
+                    <a class="nav-item nav-link" id="nav-transfo-tab" data-toggle="tab" href="#nav-transfo" role="tab" aria-controls="nav-transfo" aria-selected="false">
+                    Transformation du sous-ensemble sélectionné en document compréhensible par le moteur de recherche
+                  </a>
+                  <a class="nav-item nav-link" id="nav-traitement-tab" data-toggle="tab" href="#nav-traitement" role="tab" aria-controls="nav-traitement" aria-selected="false">
+                    Indexation des documents</a>
+                  </div>
+                </nav>
+              </div>
+              <div class="col-sm-6 text-left">
+                <div class="tab-content">
+                  <div class="tab-pane fade show active" id="nav-identification" role="tabpanel" aria-labelledby="nav-identification-tab">
+                    <div class="row">
+                      <div class="col-sm-6"><code>employes.xml</code>
+                        <pre><code class="xml">&lt;employes&gt;
+  &lt;employe id="1"&gt;
+    <span class="bg-success">&lt;nom&gt;Doe&lt;/nom&gt;</span>
+    <span class="bg-success">&lt;prenom&gt;John&lt;/nom&gt;</span>
+    &lt;complet&gt;John Doe&lt;/complet&gt;
+    <span class="bg-success">&lt;matr&gt;C12345&lt;/matr&gt;</span>
+    &lt;dipl&gt;DUT&lt;/dipl&gt;
+    <span class="bg-success">&lt;emb&gt;06/05/2010&lt;/emb&gt;</span>
+    &lt;comm&gt;...&lt;/comm&gt;
+    <span class="bg-success">&lt;sal&gt;2450.65&lt;/sal&gt;</span>
+  &lt;/employe&gt;
+  ...
+&lt;/employes&gt;</code></pre>
+                      </div>
+                      <div class="col-sm-6"><code>apache.log</code><br>
+                        <code><span class="bg-success">79.210.252.187</span> - - [<span class="bg-success">29/Nov/2017:23:50:20 +0100</span>] "<span class="bg-success">GET /</span> HTTP/1.1" <span class="bg-success">200</span> 19502 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0" <span class="bg-success">443</span> "-"
+...</code>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="nav-transfo" role="tabpanel" aria-labelledby="nav-traitement-tab">
+                    <div class="row big-top-margin">
+                      <div class="col-sm-6">
+                        <pre><code class="json">{
+  prenom: "John"
+  nom: "Doe",
+  matricule: "C12345",
+  dateEmbauche: "2010-05-06",
+  salaire: 2450.65
+}</code></pre>
+                      </div>
+                      <div class="col-sm-6">
+                        <pre><code class="json">{
+  ip: "79.210.252.187",
+  date: "2017-11-29 23:50:20",
+  statusCode: 200,
+  url: "/",
+  httpMethod: "GET",
+  port: 443
+}</code></pre>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade big-top-margin" id="nav-traitement" role="tabpanel" aria-labelledby="nav-transfo-tab">
+                    <ul class="list-group text-center">
+                      <li class="list-group-item">
+                        Gestion de l'insensibilité à la casse
+                      </li>
+                      <li class="list-group-item">
+                        Prise en compte de la phonétique
+                      </li>
+                      <li class="list-group-item">
+                        Gestion des synonymes
+                      </li>
+                      <li class="list-group-item">
+                        Gestion des conjugaisons et des pluriels
+                      </li>
+                      <li class="list-group-item">...</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font little-top-margin" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Ce n'est qu'une fois ces documents créés qu'ils pourront être <strong>indexés</strong> dans le moteur de recherche.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   <div id="data-beats" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Présentation de Beats</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            </div>
+          </div>
+          <div class="container small-font text-left">
+            <ul class="list-group">
+              <li class="list-group-item">!</li>
+            </ul>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="data-logstash" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Présentation de Logstash</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            </div>
+          </div>
+          <div class="container small-font text-left">
+            <ul class="list-group">
+              <li class="list-group-item">!</li>
+            </ul>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="visualize" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Visualiser les données</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            </div>
+          </div>
+          <div class="container small-font text-left">
+            <ul class="list-group">
+              <li class="list-group-item">!</li>
+            </ul>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="visualize-kibana" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Présentation de Kibana</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            </div>
+          </div>
+          <div class="container small-font text-left">
+            <ul class="list-group">
+              <li class="list-group-item">!</li>
+            </ul>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+     <!-- <div id="quality-methodo" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Les méthodologies de développement</h1>
+          <div class="container small-font big-img">
+            <img src="img/software-development-methods-explained-with-cars-toggl-infographic-02.jpg" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="quality-iteratif" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Le développement itératif</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Peu importe la méthode choisie (enfin presque...), l'important est d'adopter une approche <strong>itérative</strong> dans les phases de développement.
+            </div>
+          </div>
+          <div class="container small-font">
+            <img src="img/iteratif.png" alt="">
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Le but étant d'avoir un produit fonctionnel (même partiel) à montrer au client régulièrement et ainsi éviter l'effet tunnel.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tools" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Les outils et pratiques indispensables</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Liste forcément subjective et discutable...
+            </div>
+          </div>
+          <div class="container small-font big-top-margin">
+            <div class="row">
+              <div class="col-lg-6">
+                <h1 class="display-4">Outils</h1>
+                <ul class="list-group">
+                  <li class="list-group-item" data-toggle="popover" data-offset="-40" data-trigger="hover click" data-placement="left" data-html="true" data-content="<img src='img/Git-Logo-2Color.png' height='85px'>">Gestionnaire de code source</li>
+                  <li class="list-group-item" data-toggle="popover" data-trigger="hover click" data-placement="left" data-html="true" data-content="<img src='img/jenkins.png' height='50px'><img src='img/travislogo.png' height='40px'>">Plateforme d'intégration continue</li>
+                  <li class="list-group-item" data-toggle="popover" data-trigger="hover click" data-placement="left" data-html="true" data-content="<img src='img/sonarqube_logo_720.png' height='50px'>">Plateforme d'évaluation de la qualité</li>
+                  <li class="list-group-item" data-toggle="popover" data-trigger="hover click" data-placement="left" data-html="true" data-content="<img src='img/insanekanban.jpg' height='265px'>" data-template="<div class='popover medium-popover' role='tooltip'><div class='arrow'></div><h3 class='popover-header'></h3><div class='popover-body'></div></div>">Outils de plannification des itérations</li>
+                  <li class="list-group-item" data-toggle="popover" data-trigger="hover click" data-placement="left" data-html="true" data-content="<img src='img/jira.png' height='55px'><img src='img/github_logo.png' height='40px'><img src='img/mantis_logo_262x90.png' height='60px'><img src='img/bugzilla.png' height='70px'>">Plateforme de gestion des anomalies</li>
+                </ul>
+              </div>
+              <div class="col-lg-6">
+                <h1 class="display-4">Pratiques</h1>
+                <ul class="list-group">
+                  <li class="list-group-item" data-toggle="popover" data-trigger="hover click" data-placement="right" data-html="true" data-content="<img src='img/pair.jpg' height='225px'>" data-template="<div class='popover mediumm-popover' role='tooltip'><div class='arrow'></div><h3 class='popover-header'></h3><div class='popover-body'></div></div>">Pair programming</li>
+                  <li class="list-group-item" data-toggle="popover" data-trigger="hover click" data-placement="right" data-html="true" data-content="<img src='img/code_reviews.jpg' width='335px'>" data-template="<div class='popover mediumm-popover' role='tooltip'><div class='arrow'></div><h3 class='popover-header'></h3><div class='popover-body'></div></div>">Revues de code</li>
+                  <li class="list-group-item" data-toggle="popover" data-trigger="hover click" data-placement="right" data-html="true" data-content="<img src='img/retrospective.jpg' width='335px'>" data-template="<div class='popover mediumm-popover' role='tooltip'><div class='arrow'></div><h3 class='popover-header'></h3><div class='popover-body'></div></div>">Rétrospectives</li>
+                  <li class="list-group-item" data-toggle="popover" data-trigger="hover click" data-placement="right" data-html="true" data-content="<img src='img/poker.jpg' width='335px'>" data-template="<div class='popover mediumm-popover' role='tooltip'><div class='arrow'></div><h3 class='popover-header'></h3><div class='popover-body'></div></div>">Implication des développeurs dans les chiffrages</li>
+                  <li class="list-group-item" data-toggle="popover" data-trigger="hover click" data-placement="right" data-html="true" data-content="<img src='img/client.jpg' width='335px'>" data-template="<div class='popover mediumm-popover' role='tooltip'><div class='arrow'></div><h3 class='popover-header'></h3><div class='popover-body'></div></div>">Implication du client</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Vous en avez d'autres ?
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tools-continuous" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Intégration continue</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;<a href="https://jenkins.io/" target="_blank">Jenkins</a> est un serveur d'intégration continue très utilisé dans le monde java. Il requiert cependant d'être installé sur un serveur et la configuration n'est pas aisée. Il existe aussi <a href="http://travis-ci.org/" target="_blank">Travis</a> dont la configuration et l'interface sont plus pratiques, et l'intégration avec Github transparente.
+            </div>
+          </div>
+          <div class="container big-top-margin small-font">
+            <a href="https://travis-ci.org/pjvilloud/ipi-java-350-ex" target="_blank"><img src="img/travis350.png" alt=""></a>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font big-top-margin" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voir la documentation <a href="https://docs.travis-ci.com/user/languages/java/" target="_blank">ici</a> pour configurer un projet Java dans Travis
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tools-sonar" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Évaluation de la qualité</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;<a href="https://about.sonarcloud.io/" target="_blank">Sonar</a> est une plateforme d'évaluation de la qualité que l'on peut installer sur son serveur, ou utiliser en mode SaaS.
+            </div>
+          </div>
+          <div class="container little-top-margin small-font text-left">
+            <img src="img/sonar350.png" alt="" height="650">
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font little-top-margin" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voir <a href="https://sonarcloud.io/dashboard?id=com.ipiecoles.java%3Ajava350" target="_blank">ici</a> pour un exemple de rapport.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fiabilite" class="step slide" data-x="0">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Fiabilité</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;La <strong>fiabilité</strong> d'un code est sa capacité à s'exécuter correctement dans les cas nominaux comme dans les cas aux limites, et à produire le résultat escompté.
+            </div>
+          </div>
+          <div class="container  big-top-margin">
+            <ul class="list-group">
+              <li class="list-group-item">Tests unitaires</li>
+              <li class="list-group-item">Tests d'intégration</li>
+              <li class="list-group-item">Métriques</li>
+            </ul>
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;C'est le niveau le plus simple à mettre en place.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fiabilite-unit" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Les tests unitaires</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>tests unitaires</strong> ont pour but de tester une <em>partie</em> ou une <em>portion</em> de code de manière unitaire et indépendante.
+            </div>
+          </div>
+          <div class="container small-font big-top-margin">
+            <div class="row">
+              <div class="col-lg-6 little-top-margin">
+                <img src="img/Test-First.jpg" alt="" width="450px" data-toggle="popover" data-offset="0" data-trigger="hover click" data-placement="left" data-html="true" data-content="<img src='img/junit.png' width='220px'><img src='img/testng.png' width='220px'>">
+              </div>
+              <div class="col-lg-6">
+                <ul class="list-group">
+                  <li class="list-group-item list-group-item-success">Un bon test unitaire doit être...</li>
+                  <li class="list-group-item">unitaire</li>
+                  <li class="list-group-item" data-toggle="popover" data-trigger="hover click" data-placement="right" data-html="true" data-content="<img src='img/mockito.png' width='200px'><img src='img/powermock.png' width='200px'>">indépendant</li>
+                  <li class="list-group-item" data-toggle="popover" data-trigger="hover click" data-placement="right" data-html="true" data-content="<img src='img/kiss.jpg' width='200px'>">simple</li>
+                  <li class="list-group-item">reproductible</li>
+                  <li class="list-group-item">rapide</li>
+                  <li class="list-group-item" data-toggle="popover" data-trigger="hover click" data-placement="right" data-html="true" data-content="<img src='img/given.jpg' width='350px'>" data-template="<div class='popover medium-popover' role='tooltip'><div class='arrow'></div><h3 class='popover-header'></h3><div class='popover-body'></div></div>">clair</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Idéalement, ils sont codés <strong>avant</strong> l'implémentation de la fonctionnalité, on appelle cela le <strong>TDD</strong> pour <em>Test Driven Development</em>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fiabilite-unit-junit" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">JUnit</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;<strong>JUnit</strong> est un framework java permettant de réaliser des tests unitaires.
+            </div>
+          </div>
+          <div class="container small-font big-top-margin">
+            <ul class="list-group">
+              <li class="list-group-item">Classe et méthodes de test</li>
+              <li class="list-group-item">Vérifications</li>
+              <li class="list-group-item">Tests paramétrés</li>
+              <li class="list-group-item">Ressources de test</li>
+              <li class="list-group-item">Tests avec Spring</li>
+              <li class="list-group-item">Initialisation et Réinitialisation</li>
+              <li class="list-group-item">Mock</li>
+            </ul>
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Nous allons voir JUnit 4 encore très utilisé aujourd'hui et JUnit 5 qui propose des fonctionnalités plus poussées.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div id="fiabilite-unit-junit-classes" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Classe et méthodes de test</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les classes contenant les tests unitaires sont généralement placées dans le répertoire <code>src/test/java</code>. Ils sont nommés <code>NomClasseTest</code> ou <em>NomClasse</em> correspond à la classe testée et sont situées dans le même package.
+            </div>
+          </div>
+          <div class="container small-font text-left">
+            <pre><code class="java">public class VehiculeTest {
+
+  @Test //Junit 4 : org.junit.Test, Junit 5 : org.junit.jupiter.api.Test
+  public void testCheckBadImmatriculation(){
+      //Given = Initialisation des données d'entrée
+      String immatriculation = "XXXXXX";
+
+      //When = Exécution de la méthode à tester
+      Boolean immatOk = Vehicule.checkImmatriculation(immatriculation);
+
+      //Then = Vérifications de ce qu'a fait la méthode
+      Assertions.assertThat(immatOk).isFalse();
+}</code></pre>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;On nomme généralement le nom de la méthode de test de manière à comprendre ce que vérifie le test. Exemple : <code>testCheckBadImmatriculation</code> ou <code>shouldBadImmatriculation</code>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div id="fiabilite-unit-junit-verifications" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Vérifications</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Pour vérifier le comportement de la méthode testée, on utilise des assertions. JUnit propose des assertions de base mais voyons les assertions proposées par <strong>AssertJ</strong> qui sont plus complètes et lisibles car sous la forme <code>assertThat(objectAVerifier).testAEffectuer()</code>.
+            </div>
+          </div>
+          <div class="container-fluid small-font text-left">
+            <div class="row">
+              <div class="col-6">
+                <pre><code class="java">public class VehiculeTest {
+  @Test
+  public void testCheckBadImmatriculation(){
+    //Given, When
+    //Then (org.assertj.core.api.Assertions)
+    Assertions.assertThat(booleen).isFalse(); //isTrue
+    Assertions.assertThat(booleen).isNull(); //isNotNull
+    Assertions.assertThat(o).isEqualTo(o2); //isNotEqualTo
+    Assertions.assertThat(s).contains("t"); //doesNotContain
+    Assertions.assertThat(s).startsWith("t"); //endWith
+    Assertions.assertThat(s).isEmpty(); //isNotEmpty
+    Assertions.assertThat(n).isPositive(); //isNegative
+    Assertions.assertThat(n).isGreaterThan(5); //isLessThan
+    Assertions.assertThat(n).isGreaterThanOrEqualTo(5);
+    Assertions.assertThat(list).hasSize(3);
+    ...
+}</code></pre>
+              </div>
+              <div class="col-6">
+                <pre><code class="java">
+public class VehiculeTest {
+  @Test
+  public void testCheckBadImmatriculation(){
+    //Given, When
+    //Then org.junit.jupiter.api.Assertions;
+    Assertions.assertFalse(booleen); //assertTrue
+    Assertions.assertNull(booleen); //assertNotNull
+    Assertions.assertEquals(expected, actual); //assertNotEquals
+    Assertions.assertSame(expected, actual); //assertNotSame
+    Assertions.assertArrayEquals(expected, actual);
+    ...
+}</code></pre>
+              </div>    
+            </div>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Pour connaître toutes les méthodes disponibles, consulter la <a href="http://joel-costigliola.github.io/assertj/index.html" target="_blank">documentation</a> de AssertJ ou de <a href="http://junit.sourceforge.net/javadoc/org/junit/Assert.html" target="_blank">Junit</a> ou utiliser l'autocomplétion de votre IDE.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fiabilite-unit-junit-parametres" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Tests paramétrés (Junit 4)</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Lorsque l'on veut utiliser plusieurs jeux de données pour un même test, on peut utiliser le <strong>paramétrage de test</strong>.
+            </div>
+          </div>
+          <div class="container small-font text-left">
+            <pre><code class="java">@RunWith(value = Parameterized.class)//org.junit.runners.Parameterized
+public class VehiculeTest {
+  @Parameter(value = 0)//org.junit.runners.Parameterized.Parameter
+  public String immat;
+  @Parameter(value = 1)
+  public Boolean result;
+  //org.junit.runners.Parameterized.Parameters
+  @Parameters(name = "immat {0} est valide : {1}")
+  public static Collection&lt;Object[]&gt; data() {
+      return Arrays.asList(new Object[][]{
+        {"XXXXX", false}, {"AA-123-BB", true}
+      });
+  }
+  @Test
+  public void testCheckBadImmatriculation(){
+      //Given, When, Then
+      Assertions.assertThat(Vehicule.checkImmat(immat)).isEqualTo(result);
+  }</code></pre>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Cela évite de dupliquer inutilement du code et facilite l'ajout de nouveaux tests. L'inconvénient est qu'on doit définir ces paramètres au niveau de la classe de test et pas indépendamment chaque méthode de test.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fiabilite-unit-junit-parametres2" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Tests paramétrés (Junit 5)</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voici la syntaxe plus simple avec Junit 5.
+            </div>
+          </div>
+          <div class="container small-font text-left big-top-margin">
+            <pre><code class="java">@ParameterizedTest(name = "immat {0} est valide : {1}")
+@CsvSource({
+        "'XXXXX', false",
+        "'AA-123-BB', true"
+})
+void testCheckBadImmatriculation(String immat, Boolean result) {
+    //Given, When, Then
+    Assertions.assertThat(Vehicule.checkImmat(immat)).isEqualTo(result);
+}</code></pre>
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;D'autres syntaxes possibles sont expliquées dans la <a href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests" target="_blank">documentation</a>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fiabilite-unit-junit-ressources" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Ressources de test</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est fréquent de vouloir paramétrer notre application différement lorsque l'on est dans les tests que lorsqu'elle est lancée normalement. On peut créer un fichier <code>application.properties</code> dans le répertoire <code>src/test/resources</code> en y mettant les propriétés que l'on souhaite redéfinir.
+            </div>
+          </div>
+          <div class="container small-font text-left big-top-margin">
+            <pre><code class="sql">//src/test/resources/application.properties
+
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.url=jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+spring.datasource.username=sa
+spring.datasource.password=sa</code></pre>
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Par exemple, on utilisera une BDD MySQL pour l'application et une BDD en mémoire éphémère pour les tests.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fiabilite-unit-junit-spring" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Tests avec Spring</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Lorsqu'on veut tester des classes gérées par Spring, il est nécessaire que le contexte Spring soit lancé en même temps que le test (pour que les annotations <code>@Autowired</code> fonctionnent).
+            </div>
+          </div>
+          <div class="container small-font text-left">
+            <pre><code class="java">@RunWith(SpringRunner.class) //Junit 4
+@ExtendWith(SpringExtension.class) //Junit 5 
+@DataJpaTest // ou @SpringBootTest
+public class VehiculeRepositoryTest {
+
+    @Autowired
+    VehiculeRepository vehiculeRepository;
+    @Test
+    public void testFindByImmat(){
+        //Given
+        Vehicule v = vehiculeRepository.save(new Vehicule("AA-123-BB"));
+        //When
+        Vehicule result = vehiculeRepository.findByImmat("AA-123-BB");
+        //Then
+        Assertions.assertThat(result).isEqualTo(v); 
+    }
+}</code></pre>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est nécessaire de limiter le plus possible les tests de ce type car ils sont plus longs que les tests unitaires classiques à cause du temps d'initialisation du contexte Spring. On pourra notamment utiliser les Mocks.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fiabilite-unit-junit-beforeafter" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Initialisation et Réinitialisation</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Lorsqu'on veut définir un contexte de test pour tous les tests d'une classe, on peut définir des méthodes permettant d'initialiser ou de réinitialiser ce contexte.
+            </div>
+          </div>
+          <div class="container-fluid small-font text-left">
+            <div class="row">
+              <div class="col-6 small-font text-left">
+                <pre><code class="java">public class ExempleTest {
+  @BeforeClass //Junit 4
+  public void setUp(){//Nom setUp arbitraire
+    //Appelé une seule fois avant l'exécution des tests
+  }
+  @Before //Junit 4
+  public void before(){//Nom before arbitraire
+    //Appelé avant chaque test
+  }
+  @After //Junit 4
+  public void after(){//Nom after arbitraire
+    //Appelé après chaque test
+  }
+  @AfterClass // Junit 4
+  public void tearDown(){//Nom tearDown arbitraire
+    //Appelé une fois que tous les tests sont passés
+  }
+}</code></pre>
+          </div>
+          <div class="col-6 small-font text-left">
+        
+            <pre><code class="java">public class ExempleTest {
+  @BeforeAll // Junit 5
+  public void setUp(){//Nom setUp arbitraire
+    //Appelé une seule fois avant l'exécution des tests
+  }
+  @BeforeEach // Junit 5
+  public void before(){//Nom before arbitraire
+    //Appelé avant chaque test
+  }
+  @AfterEach //Junit 5
+  public void after(){//Nom after arbitraire
+    //Appelé après chaque test
+  }
+  @AfterAll // Junit 5
+  public void tearDown(){//Nom tearDown arbitraire
+    //Appelé une fois que tous les tests sont passés
+  }
+}</code></pre>
+        </div>
+          </div>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Ces méthodes peuvent être utiles pour vider la base de données ou définir un jeu de données communs à plusieurs tests. Une bonne pratique consiste à réinitialiser le contexte avant l'exécution du test (pour être sûr de ne pas récupérer de données de tests précédents). 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fiabilite-unit-junit-mock" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Mock</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Pour conserver le principe de test unitaire, il est nécessaire de ne pas dépendre de l'implémentation d'éventuelles dépendances de la classe testée. Pour cela, on utilise les <code>mocks</code> avec <strong>Mockito</strong> (inclus avec Spring) et <strong>PowerMock</strong>.
+            </div>
+          </div>
+          <div class="container-fluid small-font text-left">
+            <div class="row">
+              <div class="col-5"><pre><code class="java">//Junit 4
+@RunWith(MockitoJUnitRunner.class) 
+public class VehiculeServiceTest {
+
+  @InjectMocks
+  private VehiculeService vehiculeService;
+  @Mock
+  private VehiculeRepository vehiculeRep;
+
+  @Test(expected = EntityNotFoundException.class)
+  public void testFindByImmatNotFound(){
+    //Given
+    Mockito.when(vehiculeRep.findByImmat("X")).
+     thenReturn(null);
+    //When Junit 4
+    vehiculeService.findByImmat("X");
+    //Then Exception
+  }
+}</code></pre></div>
+              <div class="col-7"><pre><code class="java">//Junit 5
+@ExtendWith(MockitoExtension.class) 
+public class VehiculeServiceTest {
+  //...
+  @Test
+  public void testFindByImmatNotFound(){
+    //Given
+    Mockito.when(vehiculeRep.findByImmat("X")).thenReturn(null);
+    //When Junit 5
+    EntityNotFoundException e = 
+    Assertions.assertThrows(EntityNotFoundException.class, () -> 
+     vehiculeService.findByImmat("X")
+    );
+    //Then Exception
+    Assertions.assertEquals(e.getMessage(), "Véhicule X non trouvé!");
+  }
+}</code></pre></div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Ainsi, le vrai <code>VehiculeRepository</code> n'est jamais vraiment appelé, Mockito attrape l'appel et retourne un objet lui même. 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fiabilite-unit-junit-mock2" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Mock (2)</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est possible de <em>vérifier</em> des comportements sur les objets mockés.
+            </div>
+          </div>
+          <div class="container-fluid small-font text-left">
+            <pre><code class="java">public class VehiculeServiceTest {
+    @InjectMocks
+    public VehiculeService vehiculeService;
+    @Mock
+    public VehiculeRepository vehiculeRepository;
+    @Test
+    public void testAddProprietaire(){
+        //Given
+        Vehicule vehicule = new Vehicule("AA-123-BB");
+        Mockito.when(vehiculeRepository.findOne(Mockito.anyLong())).thenReturn(vehicule);
+        Mockito.when(vehiculeRepository.save(Mockito.any(Vehicule.class))).then(Mockito.returnsFirstArg());
+        //When addProprietaire(idVehicule, idProprietaire)
+        vehiculeService.addProprietaire(1L, 2L);
+        //Then
+        ArgumentCaptor&lt;Vehicule&gt; vehiculeCaptor = ArgumentCaptor.forClass(Vehicule.class);
+        Mockito.verify(vehiculeRepository, Mockito.times(1)).save(vehiculeCaptor.capture());
+        Assertions.assertThat(vehiculeCaptor.getValue().getProprietaireId()).isEqualTo(2L);
+    }
+}</code></pre>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;On vérifie ici que le véhicule passé à la méthode <code>save</code> contient bien le <code>proprietaireId</code> et qu'il n'y a eu qu'un appel sans pour autant l'effectuer... 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fiabilite-integration" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Les tests d'intégration</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>tests d'intégration</strong> ont pour but de tester le bon fonctionnement de <strong>l'assemblage</strong> de modules (précédemment testés de manière unitaire) en un composant de plus haut niveau.
+            </div>
+          </div>
+          <div class="container small-font big-top-margin">
+            <div class="row">
+              <div class="col-lg-6">
+                <img src="img/integration.gif" alt="">
+              </div>
+              <div class="col-lg-6">
+                <ul class="list-group">
+                  <li class="list-group-item list-group-item-success">Un bon test d'intégration doit être...</li>
+                  <li class="list-group-item">indépendant</li>
+                  <li class="list-group-item">rapide</li>
+                  <li class="list-group-item">pertinent</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;On ne doit pas re-tester les résultats produits par les sous-modules mais bien leur interaction !
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fiabilite-integration-junit" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Les tests d'intégration avec JUnit</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les tests d'intégration sont des tests unitaires commes les autres si ce n'est qu'on n'introduit pas de mock. On appelle les vrais méthodes. Il y a donc généralement chargement du contexte Spring.
+            </div>
+          </div>
+          <div class="container small-font text-left">
+            <pre><code class="java">@RunWith(SpringRunner.class) // Junit 4
+@ExtendWith(SpringExtension.class) // Junit 5
+@SpringBootTest
+public class VehiculeServiceTest {
+
+    @Autowired
+    public VehiculeService vehiculeService;
+
+    @Test
+    public void test(){
+        //Given avec de vraies données d'entrées
+
+        //When avec appel des vraies méthodes de repository...
+        vehiculeService.test();
+
+        //Then avec de vraies vérifications...
+    }
+}</code></pre>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est préférable de tester le plus possible en test unitaire et de limiter les tests d'intégration à la validation de l'assemblage de l'ensemble des modules.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fiabilite-metriques" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Métriques</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les métriques permettant de s'assurer de la fiabilité d'un logiciel sont les suivantes (liste non exhaustive) : 
+            </div>
+          </div>
+          <div class="container small-font big-top-margin">
+            <ul class="list-group">
+              <li class="list-group-item">Résultats des tests unitaires et d'intégration (% de tests OK)</li>
+              <li class="list-group-item">Couverture de code (%)</li>
+              <li class="list-group-item">Couverture de code avec mutation (%)</li>
+              <li class="list-group-item">Complexité (application, classe, méthode)</li>
+              <li class="list-group-item">Lignes de code en commentaire</li>
+              
+            </ul>
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-danger small-font " role="alert">
+                <i class="fa fa-icon fa-exclamation-triangle"></i>&nbsp; Attention, viser systématiquement 100% de couverture de code n'est pas efficient ! Il est également nécessaire de bien paramétrer son gestionnaire de qualité afin d'éviter les <em>faux positifs</em>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="capacite" class="step slide" data-x="0">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Capacité fonctionnelle</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;La <strong>capacité fonctionnelle</strong> d'un logiciel est le degré de conformité du logiciel aux besoins du client.
+            </div>
+          </div>
+          <div class="container small-font big-top-margin">
+            <ul class="list-group">
+              <li class="list-group-item">Tests d'acceptation</li>
+              <li class="list-group-item">Tests d'interface</li>
+              <li class="list-group-item">Tests manuels</li>
+              <li class="list-group-item">Métriques</li>
+            </ul>
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est important de connaître où est la <strong>valeur</strong> dans le logiciel pour le client, et dans la mesure du possible, commencer le développement des fonctionnalités ayant le plus de valeur.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="capacite-acceptation" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Les tests d'acceptation</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>tests d'acceptation</strong> vérifient la conformité fonctionnelle de l'application, c'est-à-dire sa capacité à produire les résultats décrits dans les spécifications en fonction de scénarios fonctionnels. 
+            </div>
+          </div>
+          <div class="container small-font little-top-margin">
+            <div class="row">
+              <div class="col-lg-6 big-top-margin">
+                <img src="img/tdd_atdd.png" alt="" width="450" data-toggle="popover" data-offset="0" data-trigger="hover click" data-placement="left" data-html="true" data-content="<img src='img/cucumber.svg' width='340px'>" data-template="<div class='popover medium-popover' role='tooltip'><div class='arrow'></div><h3 class='popover-header'></h3><div class='popover-body'></div></div>">
+              </div>
+              <div class="col-lg-6">
+                <ul class="list-group">
+                  <li class="list-group-item list-group-item-success">Un bon test d'acceptation doit être...</li>
+                  <li class="list-group-item">non technique</li>
+                  <li class="list-group-item">uniquement fonctionnel</li>
+                  <li class="list-group-item">non équivoque</li>
+                  <li class="list-group-item">écrit par le client</li>
+                  <li class="list-group-item">écrit avant le développement</li>
+                  <li class="list-group-item">automatisé</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les tests d'acceptation peuvent être considérés comme des spécifications. Lorsqu'ils sont fournis avant le début des développement, on parle d'<strong>ATDD</strong> ou <em>Acceptance Test Driven Development</em>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="capacite-interface" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Les tests d'interface</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>tests d'interface</strong> permettent d'assurer le bon fonctionnement d'une interface graphique en simulant un comportement utilisateur. Du fait du caractère évolutif d'une interface graphique, ces tests sont souvent réalisés en fin de développement.
+            </div>
+          </div>
+          <div class="container small-font little-top-margin">
+            <div class="row">
+              <div class="col-lg-6 little-top-margin">
+                <img src='img/selenium.png'><br><img src='img/Taiko-logo.svg'><br><img src='img/gauge-logo_black.svg'>
+              </div>
+              <div class="col-lg-6">
+                <ul class="list-group big-top-margin">
+                  <li class="list-group-item list-group-item-success">Un bon test d'interface doit être...</li>
+                  <li class="list-group-item">automatisé</li>
+                  <li class="list-group-item">déployé sur plusieurs plateformes</li>
+                  <li class="list-group-item">indispensable</li>
+                  <li class="list-group-item">... Y a-t-il vraiment de bons tests d'interface ?</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les tests d'interface sont souvent difficiles à développer, automatiser et maintenir. Ils doivent donc être mis en place que pour les éléments non testables autrement (positionnement d'éléments, affichage de message d'erreur, déclenchement des actions avec les éléments de l'interface...).
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="capacite-manuel" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Les tests manuels</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>tests manuels</strong> ne doivent pas pour autant être oubliés. Ils sont parfois plus pertinents que des tests d'interface difficilement maintenables car plus <em>intelligents</em>.
+            </div>
+          </div>
+          <div class="container small-font little-top-margin">
+            <div class="row">
+              <div class="col-lg-6 little-top-margin">
+                <img src="img/automation.png" alt="" width="400">
+              </div>
+              <div class="col-lg-6">
+                <ul class="list-group big-top-margin">
+                  <li class="list-group-item list-group-item-success">Un bon test manuel doit être...</li>
+                  <li class="list-group-item"><s>automatisé</s></li>
+                  <li class="list-group-item">scénarisé</li>
+                  <li class="list-group-item">pas trop long...</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les tests manuels sont évidemment coûteux mais peuvent avoir une vraie valeur ajoutée dans certains projets. Les scénarios testés sont généralement ceux déroulés lors de la phase de recette.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="capacite-metriques" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Métriques</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il n'y a pas vraiment de métriques permettant d'assurer la capacité fonctionnelle. On peut néanmoins citer : 
+            </div>
+          </div>
+          <div class="container small-font big-top-margin">
+            <ul class="list-group">
+              <li class="list-group-item">Résultats des tests d'acceptation (% de tests OK)</li>
+              <li class="list-group-item">Résultats des tests d'interface (% de tests OK)</li>
+              <li class="list-group-item">Résultats des tests manuels (% de tests OK)</li>
+              <li class="list-group-item" data-offset="-80px" data-toggle="popover" data-offset="0" data-trigger="hover click" data-placement="right" data-html="true" data-content="<img src='img/grumpycat.jpg' width='340px'>">Satisfaction client (largeur de sourire ?)</li>
+            </ul>
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp; Il est très difficile d'impliquer le client dans cette démarche car cela engage sa responsabilité et implique qu'il connaisse exactement son besoin...
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="performances" class="step slide" data-x="0">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Performances</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les performances d'une application dépendent de son type. On ne mesure pas de la même manière les performances d'un site web que d'un batch d'intégration de fichier par exemple.
+            </div>
+          </div>
+          <div class="container small-font big-top-margin">
+            <ul class="list-group">
+              <li class="list-group-item">Tests de charge</li>
+              <li class="list-group-item">Métriques</li>
+            </ul>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font big-top-margin" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Négliger les performances d'une application peut parfois coûter très cher lorsqu'il faut les améliorer une fois l'application développée et livrée...
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="performances-charges" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Les tests de charge</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est important de commencer les tests de charge dès le début des développements car généralement, c'est au fur et à mesure des développements que les performances se déteriorent.
+            </div>
+          </div>
+          <div class="container small-font">
+            <div class="row big-top-margin">
+              <div class="col-lg-6 little-top-margin">
+                <img src="img/charge.gif" alt="" data-toggle="popover" data-offset="0" data-trigger="hover click" data-placement="left" data-html="true" data-content="<img src='img/jmeter.svg' width='250'>">
+              </div>
+              <div class="col-lg-6">
+                <ul class="list-group">
+                  <li class="list-group-item list-group-item-primary">Un bon test de charge doit être...</li>
+                  <li class="list-group-item">pertinent</li>
+                  <li class="list-group-item">surveillé</li>
+                  <li class="list-group-item">complet</li>
+                  <li class="list-group-item">réaliste</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Le bon équilibre doit être trouvé car lorsqu'on améliore les performances d'un côté, c'est souvent au détriment d'un autre module.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="performances-metriques" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Métriques</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les métriques permettant de s'assurer des performances d'un logiciel sont les suivantes (liste non exhaustive) : 
+            </div>
+          </div>
+          <div class="container small-font big-top-margin">
+            <ul class="list-group">
+              <li class="list-group-item">Web : Temps de chargement des pages (durée)</li>
+              <li class="list-group-item">Web : Temps des recherches (durée)</li>
+              <li class="list-group-item">Batch : Nombre de lectures/écritures (nombre par seconde)</li>
+              <li class="list-group-item">Application : Temps de chargement</li>
+              <li class="list-group-item">Temps d'exécution des tests</li>
+              <li class="list-group-item">Evolution des tests de charge</li>
+            </ul>
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il faut arriver à identifier les points faibles de l'application (souvent la base de données mais pas que...) car parfois la solution n'est pas logicielle (augmentation mémoire...).
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="maintenabilite" class="step slide" data-x="0">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Maintenabilité</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;la <strong>maintenabilité</strong> correspond à la capacité d'une application livrée à être maintenue (maintenance corrective et évolutive) en maîtrisant les coûts, délais et son intégrité.
+            </div>
+          </div>
+          <div class="container small-font big-top-margin">
+            <ul class="list-group">
+              <li class="list-group-item">Journalisation</li>
+              <li class="list-group-item">Documentation</li>
+              <li class="list-group-item">Développements spécifiques</li>
+              <li class="list-group-item">Livraisons</li>
+              <li class="list-group-item">Métriques</li>
+            </ul>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font big-top-margin" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;On s'occupe souvent de la maintenabilité en fin de projet, lorsque la phase d'exploitation approche. C'est en général moins coûteux de garder cet élément à l'esprit au fur et à mesure des développements.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="maintenabilite-journalisation" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Journalisation</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;La <strong>journalisation</strong> permet de consigner les événements survenus dans l'application. Ces événements sont généralement consignés dans des fichiers (avec des rotations) ou dans une base de données.
+            </div>
+          </div>
+          <div class="container small-font big-top-margin">
+            <ul class="list-group">
+              <li class="list-group-item" data-toggle="popover" data-offset="0" data-trigger="hover click" data-placement="right" data-html="true" data-content="<span class='text-info'>INFO</span>"><span class="text-primary">Actions utilisateur (CRUD)</span></li>
+              <li class="list-group-item" data-toggle="popover" data-offset="0" data-trigger="hover click" data-placement="right" data-html="true" data-content="<span class='text-info'>INFO</span>"><span class="text-primary">Compte-rendu de traitements automatiques</span></li>
+              <li class="list-group-item" data-toggle="popover" data-offset="0" data-trigger="hover click" data-placement="right" data-html="true" data-content="<span class='text-info'>INFO</span>"><span class="text-primary">Informations sur le client (OS, navigateur...)</span></li>
+              <li class="list-group-item" data-toggle="popover" data-offset="0" data-trigger="hover click" data-placement="right" data-html="true" data-content="<span class='text-warning'>WARNING</span>"><span class="text-warning">Seuils techniques ou fonctionnels atteints</span></li>
+              <li class="list-group-item" data-toggle="popover" data-offset="0" data-trigger="hover click" data-placement="right" data-html="true" data-content="<span class='text-danger'>ERROR/SEVERE</span>"><span class="text-danger">Erreurs techniques ou fonctionnelles</span></li>
+            </ul>
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font" role="alert" data-toggle="popover" data-offset="0" data-trigger="hover click" data-placement="top" data-html="true" data-content="<img src='img/elastic.png' height='70px'><img src='img/logstash.png' height='70px'><img src='img/kibana.svg' height='70px'>" data-template="<div class='popover large-popover' role='tooltip'><div class='arrow'></div><h3 class='popover-header'></h3><div class='popover-body'></div></div>">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp; Il existe des outils pour exploiter de manière efficace ces logs qui peuvent être difficile à consulter. Voici également un lien vers un tutoriel utilisant <a href="https://dzone.com/articles/configuring-logback-with-spring-boot" target="_blank">Logback avec Spring Boot</a>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="maintenabilite-documentation" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Documentation</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;La documentation du code est très importante pour assurer la lisibilité et la maintenabilité d'une application
+            </div>
+          </div>
+          <div class="container small-font text-left">
+            <pre><code class="java small-font"><span data-toggle="popover" data-trigger="hover" data-placement="right" title="Commentaire sur plusieurs lignes" data-content="Les commentaires n'apparaissent pas dans le programme exécutable.
+ Ils n'ont donc pas d'influence sur la taille ou les performances du programme.<br>Les commentaires /* */ ne sont pas imbricables. Pour mettre en commentaire un bloc de code, le mettre entre /* */ est insuffisant s'il contient lui même un commentaire /* */" data-html="true">/*
+ *  Première classe d'exemple
+ *  pour le cours de test
+ */</span>
+public class HelloWorld
+{
+    <span data-toggle="popover" data-trigger="hover" data-placement="right" title="Javadoc" data-content="Commentaires utilisés pour la génération de la documentation" data-html="true">/**
+     * Point d'entrée du programme
+     * 
+     * @param args Tableau des arguments passés au programme
+    */</span>
+    public static void main(String[] args)
+    {
+        <span data-toggle="popover" data-trigger="hover" data-placement="right" title="Commentaire sur une ligne" data-content="Commentaire pour donner des informations sur la ou les instructions suivantes." data-html="true">//Affiche Hello World dans la console</span>
+        System.out.println("Hello World");
+    }
+}</code></pre>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Cela facilite la lecture du code pour les futurs développeurs qui modifieront le code.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="maintenabilite-documentationprojet" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Documentation projet</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Une documentation technique pour le projet est un bon moyen d'améliorer le temps de montée en compétences des nouveaux arrivants.
+            </div>
+          </div>
+          <div class="container small-font big-top-margin">
+            <ul class="list-group">
+              <li class="list-group-item"><a target="_blank" href="http://www.mkdocs.org/">MkDocks</a></li>
+              <li class="list-group-item"><a href="https://jekyllrb.com/" target="_blank">Jekyll</a></li>
+              <li class="list-group-item">Sharepoint</li>
+              <li class="list-group-item">Wiki</li>
+            </ul>
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;C'est aussi un bon endroit pour regrouper les instructions de livraison, les caractéristiques des différents environnements...
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="maintenabilite-dev" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Développements spécifiques</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est parfois utile de développer spécifiquement des modules pour faciliter la maintenabilité et l'exploitabilité d'une application.
+            </div>
+          </div>
+          <div class="container small-font big-top-margin">
+            <ul class="list-group">
+              <li class="list-group-item">Interface de monitoring de traitements</li>
+              <li class="list-group-item">Pages web d'administration (CRUD)</li>
+              <li class="list-group-item">Suivi des interventions</li>
+              <li class="list-group-item">Suivi des montées de version</li>
+              <li class="list-group-item">Automatisation de tâches d'exploitation</li>
+              <li class="list-group-item">...</li>
+            </ul>
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Ce genre de développement pouvant être coûteux, il faut s'assurer de leur ROI.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="maintenabilite-livraison" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Livraisons</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Le processus de livraison consiste à <em>packager</em> une certain <em>version</em> d'un logiciel et à le <em>déployer</em> sur un environnement cible.
+            </div>
+          </div>
+          <div class="container small-font little-top-margin">
+            <div class="row">
+              <div class="col-lg-6 little-top-margin">
+                <img src="img/puppet.png" alt="" width="400">
+                <img src="img/kubernetes.png" alt="" width="400">
+                <img src="img/chef.png" alt="" width="400">
+              </div>
+              <div class="col-lg-6">
+                <ul class="list-group">
+                  <li class="list-group-item list-group-item-success">Un bon processus de livraison doit être...</li>
+                  <li class="list-group-item">automatisé</li>
+                  <li class="list-group-item">tolérant aux pannes</li>
+                  <li class="list-group-item">transparent</li>
+                  <li class="list-group-item">réversible</li>
+                  <li class="list-group-item">traçable</li>
+                  <li class="list-group-item">documenté</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font little-top-margin" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il existe des outils permettant de faciliter les livraisons et de réduire les risques.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="maintenabilite-metriques" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Métriques</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les métriques permettant de s'assurer de la maintenabilité d'un logiciel sont les suivantes (liste non exhaustive) : 
+            </div>
+          </div>
+          <div class="container small-font text-left big-top-margin">
+            <ul class="list-group">
+              <li class="list-group-item">Nombre de lignes de commentaires et % par rapport au code</li>
+              <li class="list-group-item">Code smells (nombre)</li>
+              <li class="list-group-item">Dette technique (durée)</li>
+              <li class="list-group-item">Code dupliqué (% et nombre de lignes)</li>
+            </ul>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font big-top-margin" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Ces métriques sont à surveiller tout au long de la phase de développement.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+</div>
+
+<script src="js/impress.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-4-navbar.js"></script>
+<script src="js/highlight.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/mark.min.js"></script>
+<script src="js/script.js"></script>
+<script src="js/search.js"></script>
+

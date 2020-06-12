@@ -349,3 +349,7 @@ body {
 .bg-gray {
     background-color: #bcbcbc;
 }
+
+.apiResponse {
+    height: 51vh;
+}

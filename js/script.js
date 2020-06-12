@@ -120,3 +120,44 @@ $("div.step.slide").each(function(index, el) {
 
 var imp = impress();
 imp.init();
+
+function executeRest(httpMethod, url, bodyElementId, responseElementId){
+  $.ajax({
+    url: $("#elasticServer").val() + url,
+    method: httpMethod,
+    contentType: "application/json",
+    data: $("#"+bodyElementId).text()
+  }).done(function(data) {
+    $( "#" + responseElementId ).html( JSON.stringify(data, null, 2) );
+    hljs.highlightBlock(document.getElementById(responseElementId));
+  }).fail(function(jqXHR, textStatus, errorThrown){
+    $( "#" + responseElementId ).html(JSON.stringify(jqXHR.responseJSON, null, 2) );
+    hljs.highlightBlock(document.getElementById(responseElementId));
+  });
+}
+
+function executeRestExo1(){
+  $.ajax({
+    url: $("#elasticServer").val() + '/people/_search',
+    method: "POST",
+    contentType: "application/json",
+    data: $("#exoAutoCompletion").text().replace("%VALUE%", $("#nameInputExo1").val())
+  }).done(function(data) {
+    $( "#resultsExo1" ).html("");
+    for(var i=0; i<data.hits.total.value; i++){
+      $( "#resultsExo1" ).append("<li class='list-group-item'>" + data.hits.hits[i]._source.prenom + " " + data.hits.hits[i]._source.nom + "</li>")
+    }
+  })
+}
+
+function correctionExo1(){
+  $("#exoAutoCompletion").text(JSON.stringify({ 
+    "query": { 
+        "multi_match": { 
+            "fields": ["nom", "prenom"],
+            "query": "%VALUE%", 
+            "fuzziness": "AUTO" 
+        } 
+    }
+}, null, 2));
+}

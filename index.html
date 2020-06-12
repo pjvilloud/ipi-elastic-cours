@@ -48,17 +48,23 @@
         <div class="btn-group" role="group" aria-label="Basic example">
             <form class="form-inline my-2 my-lg-0" onsubmit="search()">
               <div class="input-group">
-                <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher">
+                <input id="searchInput" class="form-control mr-2" type="search" placeholder="Rechercher" aria-label="Rechercher">
                 <div class="input-group-append">
                   <span class="input-group-text" id="searchNb"></span>
                   <button class="btn btn-primary" type="submit"><i class="fa fa-icon fa-search"></i></button>
                 </div>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split ml-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-icon fa-gamepad"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="https://github.com/pjvilloud/ipi-elastic-ex" target="_blank">Lien vers le TP</a>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <input type="text" id="elasticServer" value="http://localhost:9200" class="form-control" style="width: 100%;" placeholder="URL serveur Elastic">
+
+                  </div>
+                </div>
               </div>
-              
-              
             </form>
-            &nbsp;
-            <a class="btn btn-primary" href="https://github.com/pjvilloud/ipi-elastic-ex" target="_blank"><i class="fa fa-icon fa-gamepad"></i></a>
             &nbsp;
             <a class="btn btn-primary" href="mailto:pjvilloud@protonmail.com"><i class="fa fa-icon fa-envelope"></i></a>
             &nbsp;
@@ -457,7 +463,7 @@
           </div>
           <div class="container-fluid">
             <div class="alert alert-primary small-font little-top-margin" role="alert">
-                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est possible de configurer manuellement le nombre de shards par index (par défaut à 1).
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est possible de configurer manuellement le nombre de shards par index (par défaut à 1). L'augmentation du nombre de shards permet d'améliorer les performances de l'indexation.
             </div>
           </div>
         </div>
@@ -525,7 +531,7 @@
           </div>
           <div class="container-fluid">
             <div class="alert alert-primary small-font big-top-margin" role="alert">
-                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Afin d'éviter les pertes de données, les <strong>replicas</strong> doivent être stockées sur des noeuds différents de leur <strong>shard</strong> d'origine. Le nombre de <strong>replicas</strong> par <strong>shard</strong> est configurable.
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Afin d'éviter les pertes de données, les <strong>replicas</strong> doivent être stockées sur des noeuds différents de leur <strong>shard</strong> d'origine. Le nombre de <strong>replicas</strong> par <strong>shard</strong> est configurable. L'augmentation du nombre de replicas améliore les performances des recherches et la disponibilité de l'index.
             </div>
           </div>
         </div>
@@ -601,10 +607,16 @@
           <h1 class="display-3">Communication</h1>
           <div class="container-fluid">
             <div class="alert alert-primary small-font" role="alert">
-                <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;La manière la plus simple de communiquer avec un cluster Elasticsearch est via son <strong>interface REST</strong>. Accessible par défaut sur le port <code>9200</code>, elle permet de configurer le cluster et ses différents noeuds, d'effectuer toutes les opérations de CRUD sur les index ou les documents et d'effectuer tout type de recherche.
             </div>
           </div>
-          <div class="container small-font text-left">
+          <div class="container big-top-margin">
+            <img src="img/restapis.png">
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;De nombreux clients Elasticsearch existent (notamment un présent dans Kibana) permettant de rendre l'interface plus accessible. La documentation complète de l'API est disponible <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/rest-apis.html" target="_blank">ici</a>.
+            </div>
           </div>
         </div>
       </div>
@@ -616,10 +628,175 @@
           <h1 class="display-3">Indexer</h1>
           <div class="container-fluid">
             <div class="alert alert-primary small-font" role="alert">
-                <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;L'<strong>indexation</strong> consiste à ajouter un document ou plusieurs documents dans un index. Voici les 
             </div>
           </div>
-          <div class="container small-font text-left">
+          <div class="container small-font big-top-margin">
+            <ul class="list-group">
+              <li class="list-group-item">Création/Affichage/Suppression d'index</li>
+              <li class="list-group-item">Indexation/Mise à jour/Suppression d'un document</li>
+              <li class="list-group-item">Opération sur plusieurs documents</li>
+            </ul>
+          </div>
+          <div class="container-fluid big-top-margin">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Pour exécuter les requêtes présentées, il est possible d'utiliser n'importe quel client REST (Postman par exemple) ou d'utiliser ce site en renseignant l'URL du serveur Elasticsearch dans le champ affiché au clic sur le bouton <i class="fa fa-icon fa-gamepad"></i> du menu (par défaut à <code>http://localhost:9200</code>.)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-indexer-root" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">CR(U)D sur les index</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;L'<strong>indexation</strong> consiste à ajouter un document dans un index. Pour cela, commençons par créer un index en exécutant une requête <code>PUT /[index_name]</code>.
+            </div>
+          </div>
+          <div class="container-fluid small-font text-left">
+            <div class="row">
+              <div class="col-6">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('PUT', '/people', 'createIndexPeopleBody', 'createIndexPeopleResponse')">Exécuter</button></div>
+                    Requête HTTP <code>PUT /people</code><br>
+                    Corps de la requête (optionnel)<br>
+                    <pre class="mb-0"><code class="json" id="createIndexPeopleBody">{
+  "settings" : {
+    "number_of_shards" : 1,
+    "number_of_replicas" : 1
+  },
+  "mappings" : {
+    "properties" : {
+        "dateNaissance" : { 
+          "type" : "date", 
+          "format": "dd/MM/yyyy" 
+        },
+        "sexe" : { "type": "keyword" },
+        "departementNaissance" : { "type": "keyword" }
+    }
+  }
+}</code></pre></li>
+                </ul>
+              </div>
+              <div class="col-6">
+                Réponse <br>
+                <pre><code class="json apiResponse" id="createIndexPeopleResponse"></code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Toutes les possibilités sur l'API <code>index</code> <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices.html" target="_blank">ici</a>. Pour supprimer un index, il suffit d'exécuter une requête <code>DELETE /[index_name]</code>. <button class="btn btn-danger" onclick="executeRest('DELETE', '/people', null, 'createIndexPeopleResponse')">Exécuter</button> <br>
+                Pour afficher un index, il suffit d'exécuter une requête <code>GET /[index_name]</code>. <button class="btn btn-primary" onclick="executeRest('GET', '/people', null, 'createIndexPeopleResponse')">Exécuter</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-indexer-root-document" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">CRUD sur les documents</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Pour ajouter un document à un index, on utilise une requête <code>POST /[index_name]/_doc/</code> (identifiant généré automatiquement, à éviter !) ou <code>PUT /[index_name]/_doc/[id]</code> ou encore <code>PUT /[index_name]/_create/[id]</code> ou <code>POST /[index_name]/_create/[id]</code>.
+            </div>
+          </div>
+          <div class="container-fluid small-font text-left">
+            <div class="row">
+              <div class="col-6">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('PUT', '/people/_doc/1', 'indexDocPeopleBody', 'indexDocPeopleResponse')">Exécuter</button>
+                      <button class="btn btn-secondary" onclick='(function (){
+                        $("#indexDocPeopleBody").text(JSON.stringify({
+                          "nom": "Villoud",
+                          "prenom": "Pierre-Julien",
+                          "sexe": "M",
+                          "dateNaissance": "30/04/1987",
+                          "departementNaissance": "38",
+                          "bio": "I worked for 7 years for the company Worldline in Lyon as a Java and FrontEnd lead developper. I am working as a freelance now and I teach at IPI"
+                        }, null, 2));
+                        hljs.highlightBlock(document.getElementById("indexDocPeopleBody"));
+
+                      })();return false;'>Modifier</button>
+                    </div>
+                    Requête HTTP <code>PUT /people/_doc/1</code><br>
+                    Corps de la requête<br>
+                    <pre><code class="json" id="indexDocPeopleBody">{
+  "nom": "V",
+  "prenom": "Pierre",
+  "sexe": "M",
+  "dateNaissance": "30/04/1987",
+  "departementNaissance": "38",
+  "bio": "I worked for 7 years for the company Worldline in Lyon as a Java and FrontEnd lead developper. I am working as a freelance now and I teach at IPI"
+}</code></pre></li>
+                </ul>
+                <p class="little-top-margin">Pour modifier un document, il suffit de le réindexer, c'est-à-dire exécuter une nouvelle requête <code>PUT /[index_name]/_doc/[id]</code>. Le numéro de version est incrémenté et le contenu du document mis à jour. Attention à ne pas utiliser la méthode <code>POST /[index_name]/_doc/</code> qui crée systématiquement un nouveau document (avec un nouvel id).</p>
+              </div>
+              <div class="col-6">
+                Réponse <br>
+                <pre><code class="json apiResponse" id="indexDocPeopleResponse"></code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Toutes les possibilités sur l'API <code>document</code> <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html" target="_blank">ici</a>. Pour supprimer un document, il suffit d'exécuter une requête <code>DELETE /[index_name]/_doc/[id]</code>. <button class="btn btn-danger" onclick="executeRest('DELETE', '/people/_doc/1', null, 'indexDocPeopleResponse')">Exécuter</button> <br>
+                Pour afficher un document, il suffit d'exécuter une requête <code>GET /[index_name]/_doc/[id]</code>. <button class="btn btn-primary" onclick="executeRest('GET', '/people/_doc/1', null, 'indexDocPeopleResponse')">Exécuter</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-indexer-root-multidocument" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Opérations sur plusieurs documents</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est possible d'effectuer les opérations vues précédemment sur plusieurs documents en une seule requête.
+            </div>
+          </div>
+          <div class="container-fluid small-font text-left">
+            <div class="row">
+              <div class="col-6">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/people/_mget', 'multiDocPeopleBody', 'multiDocPeopleResponse')">Exécuter</button>
+                    </div>
+                    Récupérer plusieurs documents <code>GET /people/_mget</code><br>
+                    <pre><code class="json" id="multiDocPeopleBody">{ "ids": ["1", "1000", "1001"] }</code></pre></li>
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/_bulk', 'multiDocPeopleBody2', 'multiDocPeopleResponse')">Exécuter</button>
+                    </div>
+                    Indexer plusieurs documents <code>POST /_bulk</code><br>
+                    <pre><code class="json" id="multiDocPeopleBody2">{ "index" : { "_index" : "people", "_id" : "1000" } }
+{ "nom": "Doe", "prenom": "John", "sexe": "M", "dateNaissance": "01/01/1970", "departementNaissance": "01", "bio": "I don't know anything about myself except the fact that I am a man." }
+{ "index" : { "_index" : "people", "_id" : "1001" } }
+{ "nom": "Doe", "prenom": "Jane", "sexe": "F", "dateNaissance": "02/01/1970", "departementNaissance": "01", "bio": "I don't know anything about myself except the fact that I am a woman." }
+</code></pre></li>
+                  <li class="list-group-item">
+                    Modification ou suppression en fonction d'une requête
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6">
+                Réponse <br>
+                <pre><code class="json apiResponse" id="multiDocPeopleResponse"></code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Toutes les possibilités sur l'API multi-document <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html" target="_blank">ici</a>, dans la rubrique <em>Multi-document APIs</em>.
+            </div>
           </div>
         </div>
       </div>
@@ -631,10 +808,500 @@
           <h1 class="display-3">Rechercher</h1>
           <div class="container-fluid">
             <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voyons maintenant comment on peut effectuer des recherches en utilisant <strong>Query DSL</strong> et la requête <code>POST/GET /[index(s)]/_search</code>. <br>A noter qu'il est possible de ne spécifier aucun index, un seul index, ou une liste d'index séparés par des virgules.
+            </div>
+          </div>
+          <div class="container-fluid small-font text-left">
+            <div class="row">
+              <div class="col-6">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/people/_search', 'searchAllBody', 'searchAllResponse')">Exécuter</button>
+                    </div>
+                    Renvoyer tous les documents d'un index <code>POST /people/_search</code><br>
+                    <pre><code class="json" id="searchAllBody">{
+  "query": {
+    "match_all": {}
+  }
+}</code></pre>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/_search', 'searchAllBody', 'searchAllResponse')">Exécuter</button>
+                    </div>
+                    Idem (même corps de requête) mais parmi tous les index <code>POST /_search</code><br>
+                    </li>
+                </ul>
+              </div>
+              <div class="col-6">
+                Réponse <br>
+                <pre><code class="json apiResponse" id="searchAllResponse"></code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Toutes les possibilités sur l'API <code>search</code> <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html" target="_blank">ici</a>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-rechercher-root" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Recherche stricte</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voici quelques exemples permettant de faire des recherches strictes (il y a beaucoup d'autres syntaxes ! )
+            </div>
+          </div>
+          <div class="container-fluid small-font text-left">
+            <div class="row">
+              <div class="col-6">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/people/_search', 'searchFullTextBody0', 'searchFullTextResponse')">Exécuter</button>
+                    </div>
+                    Rechercher sur tous les champs<code>POST /people/_search</code><br>
+                    <pre class="mb-0"><code class="json" id="searchFullTextBody0">{
+  "query": {
+    "query_string": { "query": "john AND Doe" }
+  }
+}</code></pre>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/people/_search', 'searchFullTextBody', 'searchFullTextResponse')">Exécuter</button>
+                    </div>
+                    Rechercher sur un champ avec <em>John</em> ou <em>Jane</em><code>POST /people/_search</code><br>
+                    <pre class="mb-0"><code class="json" id="searchFullTextBody">{ "query": { "match": { "prenom": "John Jane" } } }</code></pre>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/people/_search', 'searchFullTextBody2', 'searchFullTextResponse')">Exécuter</button>
+                    </div>
+                    Rechercher sur plusieurs champs <code>POST /people/_search</code><br>
+                    <pre class="mb-0"><code class="json" id="searchFullTextBody2">{ "query": {
+    "multi_match": { 
+      "fields": ["nom", "prenom"], "query": "John Villoud" 
+    }
+  }
+}</code></pre> </code></pre>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6">
+                Réponse <br>
+                <pre><code class="json apiResponse" id="searchFullTextResponse"></code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Toutes les possibilités sur l'API <code>search</code> <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html" target="_blank">ici</a>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-rechercher-root-partial" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Recherche partielle</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voici quelques exemples permettant de faire des recherches partielles (il y a d'autres syntaxes ! )
+            </div>
+          </div>
+          <div class="container-fluid small-font text-left">
+            <div class="row">
+              <div class="col-6">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/people/_search', 'searchPartialTextBody', 'searchPartialTextResponse')">Exécuter</button>
+                    </div>
+                    <em>Nom</em> commence par <em>do</em> <code>POST /people/_search</code><br>
+                    <pre class="mb-0"><code class="json" id="searchPartialTextBody">{ "query": { "prefix": { "nom": "do" } } }</code></pre>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/people/_search', 'searchPartialTextBody1', 'searchPartialTextResponse')">Exécuter</button>
+                    </div>
+                    <em>Nom</em> contient <em>j</em> puis <em>n</em> <code>POST /people/_search</code><br>
+                    <pre class="mb-0"><code class="json" id="searchPartialTextBody1">{ "query": { "wildcard": { "prenom": "j*n" } } }</code></pre>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/people/_search', 'searchPartialTextBody2', 'searchPartialTextResponse')">Exécuter</button>
+                    </div>
+                    <em>Bio</em> contient dans l'ordre <em>that I am</em> <code>POST /people/_search</code><br>
+                    <pre class="mb-0"><code class="json" id="searchPartialTextBody2">{ "query": { "match_phrase": { "bio": "that I am" } } }</code></pre>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/people/_search', 'searchPartialTextBody3', 'searchPartialTextResponse')">Exécuter</button>
+                    </div>
+                    <em>Bio</em> contient <em>know a***</em> <code>POST /people/_search</code><br>
+                    <pre class="mb-0"><code class="json" id="searchPartialTextBody3">{ "query": { "match_phrase_prefix": { "bio": "know a" } } }</code></pre>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6">
+                Réponse <br>
+                <pre><code class="json apiResponse" id="searchPartialTextResponse"></code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Attention à l'utilisation des recherches de type <code>wildcard</code> (ne jamais commencer par * ou ?) qui peuvent être peu performances lorsque la taille de l'index est importante.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-rechercher-root-flou" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Recherche floue ou par intervalle</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Le gros intérêt d'Elasticsearch est de pouvoir faire des recherches floues. Voici quelques exemples.
+            </div>
+          </div>
+          <div class="container-fluid small-font text-left">
+            <div class="row">
+              <div class="col-6">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/people/_search', 'searchFlouTextBody', 'searchFlouTextResponse')">Exécuter</button>
+                    </div>
+                    <em>Nom</em> ressemblant à <em>jonh</em> <code>POST /people/_search</code><br>
+                    <pre class="mb-0"><code class="json" id="searchFlouTextBody">{ "query": { 
+  "match": { 
+    "prenom":  {"query": "jonh", "fuzziness": "AUTO" } 
+} } }</code></pre> ou <pre class="mb-0"><code>{ "query": { "fuzzy": { "prenom": "jonh" } } }</code></pre>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/people/_search', 'searchFlouTextBody1', 'searchFlouTextResponse')">Exécuter</button>
+                    </div>
+                    Personnes nées entre le 1<sup>er</sup> janvier et le 1<sup>er</sup> février 1970 <code>POST /people/_search</code><br>
+                    <pre class="mb-0"><code class="json" id="searchFlouTextBody1">{ "query": { 
+  "range": { 
+    "dateNaissance": {
+      "gte": "01/01/1970", "lte": "01/02/1970"
+    }
+  } 
+} }</code></pre>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6">
+                Réponse <br>
+                <pre><code class="json apiResponse" id="searchFlouTextResponse"></code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font" role="alert">
                 <i class="fa fa-icon fa-info-circle"></i>&nbsp;
             </div>
           </div>
-          <div class="container small-font text-left">
+        </div>
+      </div>
+    </div>
+
+    <div id="search-rechercher-root-scen1" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Scénario 1 : Auto-complétion</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Exercice : Mettre en place une auto-complétion recherchant de manière floue sur le prénom ou le nom.
+            </div>
+          </div>
+          <div class="container-fluid small-font text-left">
+            <div class="row">
+              <div class="col-6">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-warning" onclick="correctionExo1()">Correction</button></div>
+                    Mettre <code>"%VALUE%"</code> dans votre requête pour remplacer automatiquement par la valeur saisie dans le champ.
+                    <textarea id="exoAutoCompletion" class="small-font apiResponse form-control" style="width: 100%"></textarea>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6">
+                <input class="form-control" type="text" placeholder="Nom ou prénom" id="nameInputExo1" onkeyup="executeRestExo1()">
+                <ul class="list-group" id="resultsExo1">
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-aggregate" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Agréger</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les <strong>agrégations</strong> permettent de présenter les données regroupées selon certains champs. On parle de <strong>facettes</strong> Il est alors possible de classer et analyser les résultats retournés sous diverses formes (diagrammes...) et améliorer la navigation en indiquant clairement les filtrages possibles.
+            </div>
+          </div>
+          <div class="container-fluid small-font little-top-margin">
+            <img src="img/facettes.png">
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font little-top-margin" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Très intéressant lorsqu'on recherche parmi un catalogue de produits par exemple, ce mécanisme s'avérera également pratique dans le cadre du monitoring d'applications
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-aggregate-root" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Agrégation basique</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Voyons grouper des résultats en fonction des différentes valeurs d'un champ.
+            </div>
+          </div>
+          <div class="container-fluid text-left small-font little-top-margin">
+            <div class="row">
+              <div class="col-6">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/people/_search', 'aggregateBasicBody', 'aggregateBasicResponse')">Exécuter</button>
+                    </div>
+                    Afficher tous les résultats en indiquant les cardinalités pour chaque agrégat par département de naissance avec critère de taille et d'ordre <br> <code>POST /people/_search</code>
+                    <pre class="mb-0"><code class="json" id="aggregateBasicBody">{ 
+  "query": { "match_all": { } },
+  "aggregations": {
+    "departements": {
+      "terms": { 
+        "field": "departementNaissance",
+        "size": 2,
+        "order" : { "_count" : "desc" }
+      }
+    }
+  }
+}</code></pre>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6">
+                Réponse <br>
+                <pre><code class="json apiResponse" id="aggregateBasicResponse"></code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font mt-1" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;A noter qu'on ne peut pas effectuer des agrégations <code>terms</code> pour un champ mappé en tant que <code>text</code>. Il faut qu'il soit mappé en tant que <code>keyword</code>. Toutes les informations sur l'agrégation <code>terms</code> <a href="https://www.elastic.co/guide/en/elasticsearch/reference/master/search-aggregations-bucket-terms-aggregation.html" target="_blank">ici</a>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-aggregate-root-range" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Agrégation <code>range</code></h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les agrégations de type <code>range</code> permettent de répartir les résultats en tranches par rapport à une valeur d'un champ
+            </div>
+          </div>
+          <div class="container-fluid text-left small-font little-top-margin">
+            <div class="row">
+              <div class="col-6">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/people/_search', 'aggregateRangeDateBody', 'aggregateRangeDateResponse')">Exécuter</button>
+                    </div>
+                    Afficher tous les résultats en indiquant les cardinalités pour chaque agrégat pour les tranches définies <br> <code>POST /people/_search</code>
+                    <pre class="mb-0"><code class="json" id="aggregateRangeDateBody">{ 
+  "query": { "match_all": { } },
+  "aggregations": {
+    "agg_dateN": {
+      "date_range": {
+        "field": "dateNaissance", "format": "yyyy",
+        "ranges": [ { "from": "2000" }, 
+          { "from": "1980", "to": "2000"},
+          { "from": "1970", "to": "1980"}
+        ]
+      }
+    }
+  }
+}</code></pre>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6">
+                Réponse <br>
+                <pre><code class="json apiResponse" id="aggregateRangeDateResponse"></code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid mt-3">
+            <div class="alert alert-primary small-font mt-1" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est bien évidemment possible de faire des agrégations <code>range</code> pour des champs numériques classiques. Dans ce cas, remplacer <code>date_range</code> par <code>range</code> et supprimer <code>format</code>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-aggregate-root-histo" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Agrégation <code>histogram</code></h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les agrégations <code>histogram</code> suivent le même principe que les agrégations <code>range</code> mais on spécifie un taille d'intervalle au lieu de définir manuellement les tranches.
+            </div>
+          </div>
+          <div class="container-fluid text-left small-font mt-1">
+            <div class="row">
+              <div class="col-6">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/people/_search', 'aggregateHistoDateBody', 'aggregateHistoDateResponse')">Exécuter</button>
+                    </div>
+                    Afficher tous les résultats en indiquant les cardinalités pour chaque agrégat par année de naissance <br> <code>POST /people/_search</code>
+                    <pre class="mb-0"><code class="json" id="aggregateHistoDateBody">{ 
+  "query": { "match_all": { } },
+  "aggregations": {
+    "agg_dateN": {
+      "date_histogram": {
+        "field": "dateNaissance",
+        "calendar_interval": "year",
+        "format": "yyyy"
+      }
+    }
+  }
+}</code></pre>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6">
+                Réponse <br>
+                <pre><code class="json apiResponse" id="aggregateHistoDateResponse"></code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font mt-1" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est bien évidemment possible de faire des agrégations <code>histogram</code> pour des champs numériques classiques. Dans ce cas, remplacer <code>date_histogram</code> par <code>histogram</code>, supprimer <code>format</code> et remplacer <code>calendar_interval</code> par <code>interval</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-aggregate-root-filter" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Agrégation <code>filter</code></h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Les agrégations <code>filter</code> permettent de regrouper les documents qui respectent les critères du filtre puis d'éventuellement appliquer d'autres agrégations sur ce sous-ensemble.
+            </div>
+          </div>
+          <div class="container-fluid text-left small-font mt-1">
+            <div class="row">
+              <div class="col-6">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/people/_search', 'aggregateFilterBody', 'aggregateFilterResponse')">Exécuter</button>
+                    </div>
+                    Afficher tous les hommes en indiquant les cardinalités pour chaque agrégat par département de naissance <br> <code>POST /people/_search</code>
+                    <pre class="mb-0"><code class="json" id="aggregateFilterBody">{ 
+  "query": { "match_all": { } },
+  "aggregations": {
+    "agg_fi": {
+      "filter": { "term": { "sexe": "M" } },
+      "aggs": {
+        "departements": {
+          "terms": { "field": "departementNaissance" }
+        }
+      }
+    }
+  }
+}</code></pre>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6">
+                Réponse <br>
+                <pre><code class="json apiResponse" id="aggregateFilterResponse"></code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font mt-1" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Il est possible de définir plusieurs filtres un utilisant la syntaxe <code class="json">"filters": { "filters": [ ... ] }</code> à la place de <code>filter</code>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-aggregate-root-minmax" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Agrégation <code>min</code> <code>max</code> et <code>avg</code></h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Ces agrégations permettent respectivement de calculer la valeur minimum, maximum et moyenne pour un champ défini.
+            </div>
+          </div>
+          <div class="container-fluid text-left small-font mt-1">
+            <div class="row">
+              <div class="col-6">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="float-right"><button class="btn btn-primary" onclick="executeRest('POST', '/people/_search', 'aggregateMinMaxBody', 'aggregateMinMaxResponse')">Exécuter</button>
+                    </div>
+                    Afficher tous les résultats en indiquant la date de naissance minimum, maximum et moyenne <br> <code>POST /people/_search</code>
+                    <pre class="mb-0"><code class="json" id="aggregateMinMaxBody">{ 
+  "query": { "match_all": { } },
+  "aggregations": {
+    "date_min": {
+      "min": { "field": "dateNaissance" }
+    },
+    "date_max": {
+      "max": { "field": "dateNaissance" }
+    },
+    "date_avg": {
+      "avg": { "field": "dateNaissance" }
+    }
+  }
+}</code></pre>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6">
+                Réponse <br>
+                <pre><code class="json apiResponse" id="aggregateMinMaxResponse"></code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font mt-3" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;La notion de <em>moyenne</em> aura plus de sens pour les champs de type numérique. Il est également possible d'utiliser l'agrégation <code>statistical</code> qui calcule plusieurs statistiques sur le champ défini (celles présentées ici mais également somme, écart type, variance...).
+            </div>
           </div>
         </div>
       </div>

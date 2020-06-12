@@ -2413,7 +2413,7 @@
             };
 
             //Open speaker console when they press 'p'
-            registerKeyEvent( [ 80 ], open, window );
+            //registerKeyEvent( [ 80 ], open, window );
 
             //Btw, you can also launch console automatically:
             //<div id="impress" data-console-autolaunch="true">

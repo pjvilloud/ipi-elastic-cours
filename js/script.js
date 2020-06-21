@@ -126,7 +126,10 @@ function executeRest(httpMethod, url, bodyElementId, responseElementId){
     url: $("#elasticServer").val() + url,
     method: httpMethod,
     contentType: "application/json",
-    data: $("#"+bodyElementId).text()
+    data: $("#"+bodyElementId).text(),
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader ("Authorization", "Basic " + btoa($("#elasticUser").val() + ":" + $("#elasticPwd").val()));
+    },
   }).done(function(data) {
     $( "#" + responseElementId ).html( JSON.stringify(data, null, 2) );
     hljs.highlightBlock(document.getElementById(responseElementId));
@@ -141,7 +144,10 @@ function executeRestExo1(){
     url: $("#elasticServer").val() + '/people/_search',
     method: "POST",
     contentType: "application/json",
-    data: $("#exoAutoCompletion").text().replace("%VALUE%", $("#nameInputExo1").val())
+    data: $("#exoAutoCompletion").text().replace("%VALUE%", $("#nameInputExo1").val()),
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader ("Authorization", "Basic " + btoa($("#elasticUser").val() + ":" + $("#elasticPwd").val()));
+    },
   }).done(function(data) {
     $( "#resultsExo1" ).html("");
     for(var i=0; i<data.hits.total.value; i++){

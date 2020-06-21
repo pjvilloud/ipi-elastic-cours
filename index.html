@@ -59,7 +59,9 @@
                   <div class="dropdown-menu">
                     <a class="dropdown-item" href="https://github.com/pjvilloud/ipi-elastic-ex" target="_blank">Lien vers le TP</a>
                     <div role="separator" class="dropdown-divider"></div>
-                    <input type="text" id="elasticServer" value="http://localhost:9200" class="form-control" style="width: 100%;" placeholder="URL serveur Elastic">
+                    <input type="text" id="elasticServer" value="http://localhost:9200" class="form-control" style="width: 100%;" placeholder="Nom d'utilisateur">
+                    <input type="text" id="elasticUser" value="elastic" class="form-control" style="width: 100%;" placeholder="URL serveur Elastic">
+                    <input type="password" id="elasticPwd" value="" class="form-control" style="width: 100%;" placeholder="Mot de passe">
 
                   </div>
                 </div>
@@ -145,6 +147,11 @@
                 <img src="img/elastic.png" alt="" height="500">
               </div>
             </div>      
+          </div>
+          <div class="container-fluid">
+            <div class="alert alert-warning small-font" role="alert">
+                <i class="fa fa-icon fa-danger-sign"></i>&nbsp;L'objectif de ce cours n'est pas de vous présenter en détails l'ensemble des fonctionnalités (cela demanderait plus de temps !), mais de vous montrer les principes de fonctionnement et quelques cas d'utilisation concrets afin de mieux appréhender ces outils.
+            </div>
           </div>
         </div>
       </div>
@@ -737,7 +744,7 @@
   "bio": "I worked for 7 years for the company Worldline in Lyon as a Java and FrontEnd lead developper. I am working as a freelance now and I teach at IPI"
 }</code></pre></li>
                 </ul>
-                <p class="little-top-margin">Pour modifier un document, il suffit de le réindexer, c'est-à-dire exécuter une nouvelle requête <code>PUT /[index_name]/_doc/[id]</code>. Le numéro de version est incrémenté et le contenu du document mis à jour. Attention à ne pas utiliser la méthode <code>POST /[index_name]/_doc/</code> qui crée systématiquement un nouveau document (avec un nouvel id).</p>
+                <p class="little-top-margin">Pour modifier un document, il suffit de le réindexer, c'est-à-dire exécuter une nouvelle requête <code>PUT /[index_name]/_doc/[id]</code>. Le numéro de version est incrémenté et le contenu du document remplacé. Attention à ne pas utiliser la méthode <code>POST /[index_name]/_doc/</code> qui crée systématiquement un nouveau document (avec un nouvel id). On peut aussi utiliser <code>POST /[index_name]/_update/[id]</code></p>
               </div>
               <div class="col-6">
                 Réponse <br>
@@ -1318,7 +1325,7 @@
           </div>
           <div class="container-fluid small-font">
             <div class="row" style="height: 500px">
-              <div class="col-sm-6 big-top-margin">
+              <div class="col-sm-4 big-top-margin">
                 <nav class="little-top-margin">
                   <div class="nav nav-pills flex-column" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-identification-tab" data-toggle="tab" href="#nav-identification" role="tab" aria-controls="nav-identification" aria-selected="true">
@@ -1332,7 +1339,7 @@
                   </div>
                 </nav>
               </div>
-              <div class="col-sm-6 text-left">
+              <div class="col-sm-8 text-left">
                 <div class="tab-content">
                   <div class="tab-pane fade show active" id="nav-identification" role="tabpanel" aria-labelledby="nav-identification-tab">
                     <div class="row">
@@ -1416,17 +1423,103 @@
           <h1 class="display-3">Présentation de Beats</h1>
           <div class="container-fluid">
             <div class="alert alert-primary small-font" role="alert">
-                <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;<strong><a href="https://www.elastic.co/guide/en/beats/libbeat/current/index.html" target="_blank">Beats</a></strong> représente un ensemble de modules permettant de récupérer des données de sources diverses afin de les envoyer à votre <strong>Elasticsearch</strong>. On retrouve <strong>FileBeat</strong> permettant de gérer notamment les fichiers de logs, <strong>MetricBeat</strong> permettant de collecter des indicateurs et statistiques de machines (processeur, mémoire...) ou encore <strong>HeartBeat</strong> qui permet de surveiller la disponibilité d'applications web.
             </div>
           </div>
-          <div class="container small-font text-left">
-            <ul class="list-group">
-              <li class="list-group-item">!</li>
-            </ul>
+          <div class="container small-font ">
+            <img src="img/beats-platform.png">
           </div>
           <div class="container-fluid little-top-margin">
             <div class="alert alert-primary small-font " role="alert">
-                <i class="fa fa-icon fa-info-circle"></i>&nbsp;
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Ces modules ou <strong>agents</strong> peuvent être installés sur les différentes machines de votre architecture et envoyer leur données à un ou plusieurs cluster <em>Elasticsearch</em>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="data-filebeat" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3"><code>FileBeat</code></h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;<strong><a href="https://www.elastic.co/guide/en/beats/filebeat/current/index.html" target="_blank">FileBeat</a></strong> permet de configurer un ou plusieurs <strong>inputs</strong> correspondant aux différents types de logs que vous souhaitez gérer.
+            </div>
+          </div>
+          <div class="container small-font ">
+            <img src="img/filebeat.png" height="600px">
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Lorsque des lignes sont ajoutées dans les fichiers <em>surveillés</em> par <strong>FileBeat</strong>, ce dernier les traite et transmet automatiquement à l'<strong>ouput</strong> configuré les lignes concernées.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="data-filebeat-root" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Configuration</h1>
+          <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Une fois les différentes étapes d'<strong><a href="https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-getting-started.html" target="_blank">installation</a></strong> effectuées, il est nécessaire de configurer <strong>FileBeat</strong> pour lui définir son ou ses <strong>inputs</strong>, son <strong>output</strong> et les URLs de <strong>Kibana</strong> et <strong>Elasticsearch</strong>. La configuration est située dans le fichier <code>filebeat.yml</code> :
+            </div>
+          </div>
+          <div class="container small-font text-left">
+            <pre class="mb-0"><code class="yaml">#Fichier filebeat.yml
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/*.log
+#============================== Kibana =====================================
+setup.kibana:
+  host: "localhost:5601"
+#-------------------------- Output (un seul) ------------------------------
+output.elasticsearch:
+  hosts: ["localhost:9200"]
+#output.logstash:
+  #hosts: ["localhost:5044"]</code></pre>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;On renseigne l'url de <strong>Kibana</strong> afin de permettre à <strong>FileBeat</strong> de créer des <strong>visualisations</strong> prêtes à l'emploi (notamment lorsqu'on utilise des <em>modules</em>). Pour profiter de ces visualisations, il faut utiliser l'output Elasticsearch.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="data-filebeat-root-modules" class="step slide">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid text-center">
+          <h1 class="display-3">Modules</h1>
+            <div class="container-fluid">
+            <div class="alert alert-primary small-font" role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;De nombreux <strong><a href="https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-modules.html" target="_blank">modules</a></strong> peuvent être activés pour gérer des logs dont le format est standard (logs Apache, MySQL...).
+            </div>
+          </div>
+          <div class="container small-font text-left">
+            <code>filebeat modules enable apache</code>
+            <pre class="mb-0"><code class="yaml"># Module: apache (modules.d/apache.yml ou modules.d/apache.yml.disabled si non activé)
+- module: apache
+  # Access logs
+  access:
+    enabled: true
+    var.paths: ["/var/logs/apache/access_log*"]
+
+  # Error logs
+  error:
+    enabled: true
+    # Set custom paths for the log files. If left empty,
+    # Filebeat will choose the paths depending on your OS.
+    var.paths: ["/var/logs/apache/error.log*"]</code></pre>
+          </div>
+          <div class="container-fluid little-top-margin">
+            <div class="alert alert-primary small-font " role="alert">
+                <i class="fa fa-icon fa-info-circle"></i>&nbsp;Si Logstash pertinent ?
             </div>
           </div>
         </div>
@@ -2646,6 +2739,7 @@ public class HelloWorld
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrap-4-navbar.js"></script>
 <script src="js/highlight.min.js"></script>
+<script src="js/yaml.min.js"></script>
 <script src="js/moment.min.js"></script>
 <script src="js/mark.min.js"></script>
 <script src="js/script.js"></script>

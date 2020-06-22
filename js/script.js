@@ -1,6 +1,5 @@
 
 hljs.initHighlightingOnLoad();
-KbnCanvas.share();
 var nbSlides = $(".step.slide").length;
 var showPopover = new URL(window.location).searchParams.get("showPopover");
 
